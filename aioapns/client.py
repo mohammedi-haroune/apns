@@ -1,4 +1,3 @@
-import asyncio
 from ssl import SSLContext
 from typing import Optional
 
@@ -16,7 +15,6 @@ class APNs:
         topic: Optional[str] = None,
         max_connections: int = 10,
         max_connection_attempts: Optional[int] = None,
-        loop: Optional[asyncio.AbstractEventLoop] = None,
         use_sandbox: bool = False,
         no_cert_validation: bool = False,
         ssl_context: Optional[SSLContext] = None,
@@ -30,7 +28,6 @@ class APNs:
                 topic=topic,
                 max_connections=max_connections,
                 max_connection_attempts=max_connection_attempts,
-                loop=loop,
                 use_sandbox=use_sandbox,
                 no_cert_validation=no_cert_validation,
                 ssl_context=ssl_context,
@@ -43,7 +40,6 @@ class APNs:
                 topic=topic,
                 max_connections=max_connections,
                 max_connection_attempts=max_connection_attempts,
-                loop=loop,
                 use_sandbox=use_sandbox,
                 ssl_context=ssl_context,
             )
@@ -53,13 +49,5 @@ class APNs:
                 "the key credentials"
             )
 
-    async def send_notification(self, request):
-        response = await self.pool.send_notification(request)
-        if not response.is_successful:
-            logger.error(
-                "Status of notification %s is %s (%s)",
-                request.notification_id,
-                response.status,
-                response.description,
-            )
-        return response
+    def send_notification(self, request):
+        return self.pool.send_notification(request)

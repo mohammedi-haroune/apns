@@ -1,5 +1,6 @@
-aioapns - An efficient APNs Client Library for Python/asyncio
+apns - APNs Client Library for Python
 =================================================================================
+
 
 .. image:: https://github.com/Fatal1ty/aioapns/workflows/tests/badge.svg
    :target: https://github.com/Fatal1ty/aioapns/actions
@@ -16,6 +17,9 @@ aioapns - An efficient APNs Client Library for Python/asyncio
 
 .. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
     :target: https://opensource.org/licenses/Apache-2.0
+
+
+**Note** This is a fork of https://github.com/Fatal1ty/aioapns that aims to remove asyncio dependency
 
 **aioapns** is a library designed specifically for sending push-notifications to iOS devices
 via Apple Push Notification Service. aioapns provides an efficient client through

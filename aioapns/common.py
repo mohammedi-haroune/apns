@@ -1,4 +1,3 @@
-import asyncio
 from enum import Enum
 from uuid import uuid4
 
@@ -56,36 +55,6 @@ class NotificationResult:
     @property
     def is_successful(self):
         return self.status == APNS_RESPONSE_CODE.SUCCESS
-
-
-class DynamicBoundedSemaphore(asyncio.BoundedSemaphore):
-    @property
-    def bound(self):
-        return self._bound_value
-
-    @bound.setter
-    def bound(self, new_bound):
-        if new_bound > self._bound_value:
-            if self._value > 0:
-                self._value += new_bound - self._bound_value
-            if self._value <= 0:
-                for _ in range(new_bound - self._bound_value):
-                    self.release()
-        elif new_bound < self._bound_value:
-            self._value -= self._bound_value - new_bound
-        self._bound_value = new_bound
-
-    def release(self):
-        self._value += 1
-        if self._value > self._bound_value:
-            self._value = self._bound_value
-        self._wake_up_next()
-
-    def destroy(self, exc):
-        while self._waiters:
-            waiter = self._waiters.popleft()
-            if not waiter.done():
-                waiter.set_exception(exc)
 
 
 class APNS_RESPONSE_CODE:
